@@ -63,12 +63,31 @@ if ($_POST) {
         desconectar();
     }
 }
+
+if (isset($_GET['generar_pdf'])) {
+    require('fpdf.php'); // Reemplaza con la ruta correcta a la biblioteca
+
+    $pdf = new FPDF();
+    $pdf->AddPage();
+    $pdf->SetFont('Arial', 'B', 16);
+    $pdf->Cell(40, 10, 'Datos desde MySQL');
+    // Agrega tu lógica para mostrar los datos en el PDF
+
+    $nombre_archivo_pdf = 'url.pdf'; // Nombre del archivo PDF
+    $pdf->Output($nombre_archivo_pdf, 'D');
+    exit; // Detén la ejecución después de generar el PDF
+}
+
+// Enlace a tu Gist de GitHub
+$enlace_github = "https://github.com/LUANDIGO/buscador";
+
 ?>
 
 <!DOCTYPE html>
 <html lang="es-ES">
 <head>
-<meta charset='utf-8'>
+    <meta charset='utf-8'>
+    <title>Buscador</title>
 </head>
 <body>
     <h1>Buscador</h1>
@@ -77,9 +96,19 @@ if ($_POST) {
         <input type="submit" name="buscador" value="buscar">
     </form>
     <?php
-    // Resultado, número de registros y contenido. echo $registros;
+    // Resultado, número de registros y contenido
     echo $registros;
     echo $texto;
     ?>
+
+    <br>
+    
+    <!-- Enlace para generar PDF -->
+    <a href="?generar_pdf=true" target="_blank">Generar PDF</a>
+
+    <br>
+
+    <!-- Enlace para ver en GitHub -->
+    <a href="<?php echo $enlace_github; ?>" target="_blank">Ver en GitHub</a>
 </body>
 </html>
